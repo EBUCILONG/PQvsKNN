@@ -254,7 +254,52 @@ void ReadOneDimensionalPoints(
 	point_stream.close();
 }
 
+/**
+* This function read training points from point_file
+*  @param  points_file   The filename with points in .fvecs format or binary float format.
+*  @param  points        A one-dimensional array data (of dimension*points_count).
+*  @param  points_count  The number of points.
+*  @param  dimension     The dimension of points.
+*/
+template<typename T>
+void SaveOneDimensionalPoints(
+	const string point_file,
+	vector<T>& points,
+	const int points_count,
+	const int dimension)
+{
+	ofstream point_stream;
+	point_stream.open(point_file.c_str(), ios::binary);
+	if (!point_stream.good())
+	{
+		cout << "Error in write " + point_file << endl;
+		throw std::logic_error("Bad output points stream" + point_file);
+	}
+	point_stream.write((char *)&points_count, sizeof(int));
+	point_stream.write((char *)&dimension, sizeof(int));
+	point_stream.write(reinterpret_cast<char*>(&(points[0])), sizeof(T)*dimension*points_count);
+	point_stream.close();
+}
 
+template<typename T>
+void SaveOneDimensionalPoints(
+	const string point_file,
+	T* points,
+	const int points_count,
+	const int dimension)
+{
+	ofstream point_stream;
+	point_stream.open(point_file.c_str(), ios::binary);
+	if (!point_stream.good())
+	{
+		cout << "Error in write " + point_file << endl;
+		throw std::logic_error("Bad output points stream" + point_file);
+	}
+	point_stream.write((char *)&points_count, sizeof(int));
+	point_stream.write((char *)&dimension, sizeof(int));
+	point_stream.write(reinterpret_cast<char*>(points), sizeof(T)*dimension*points_count);
+	point_stream.close();
+}
 
 
 
