@@ -8,6 +8,7 @@
 #ifndef LOAD_DATAUTIL_H_
 #define LOAD_DATAUTIL_H_
 
+#include<armadillo>
 #include <string>
 #include <fstream>
 #include <ios>
@@ -22,6 +23,7 @@ using std::ios;
 using std::cout;
 using std::endl;
 using std::pair;
+using namespace arma;
 
 // PointType and DcitionaryType must be the same and be float!
 typedef float FloatType;
@@ -301,7 +303,29 @@ void SaveOneDimensionalPoints(
 	point_stream.close();
 }
 
-
+/*
+ * this function help a mat in arma load a matix from a std one-dim float vector
+ * @param dataDim  the row vector dimension of the vector
+ * @param dataNum  the number of row of the input vector
+ * @param matrixRowDim the number of row of the aim mat
+ * @param subCode  the reference of the mat
+ * @param points   the reference of the input vector
+ */
+void loadMatFromVector(
+	int dataDim,
+	int dataNum,
+	int matrixRowDim,
+	mat& subCode,
+	vector<float>& points,
+	int bias
+	){
+	for(int i = 0; i < dataNum; i++){
+			for(int j = 0; j < matrixRowDim; j++){
+				subCode(i,j) = points(i * dataDim + bias + j);
+			}
+		}
+	vector<mat> a;
+}
 
 
 #endif /* LOAD_DATAUTIL_H_ */

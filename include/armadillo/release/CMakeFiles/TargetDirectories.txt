@@ -1,0 +1,7 @@
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/install/local.dir
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/rebuild_cache.dir
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/edit_cache.dir
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/install/strip.dir
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/install.dir
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/list_install_components.dir
+/Users/oruqimaru/Repositary/PQvsKNN/include/armadillo/release/CMakeFiles/armadillo.dir

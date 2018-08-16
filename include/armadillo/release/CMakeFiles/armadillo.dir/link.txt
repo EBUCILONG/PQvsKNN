@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++  -stdlib=libc++ -dynamiclib -Wl,-headerpad_max_install_names -compatibility_version 9.0.0 -current_version 9.10.5 -o libarmadillo.9.10.5.dylib -install_name @rpath/libarmadillo.9.dylib CMakeFiles/armadillo.dir/src/wrapper.cpp.o -framework Accelerate 
