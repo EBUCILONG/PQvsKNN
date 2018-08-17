@@ -64,11 +64,11 @@ bool KMeans::run() {
 }
 
 int KMeans::findNearestCluster(const Point &point) {
-  double min_dist = 1e12;
+  float min_dist = 1e12;
   int min_cluster = -1;
 
   for (int idx = 0; idx < num_clusters_; ++idx) {
-    const double dist = Point::distance(point, means_[idx]);
+    const float dist = Point::distance(point, means_[idx]);
     if (dist < min_dist) {
       min_dist = dist;
       min_cluster = idx;
@@ -162,8 +162,8 @@ bool KMeans::loadPoints(const string &filepath, vector<Point> *points) {
     std::stringstream line_stream(line);
 
     // Get a vector of numbers directly from a stream iterator.
-    std::istream_iterator<double> start(line_stream), end;
-    std::vector<double> numbers(start, end);
+    std::istream_iterator<float> start(line_stream), end;
+    std::vector<float> numbers(start, end);
 
     Point p(numbers);
     points->push_back(p);
@@ -181,7 +181,7 @@ void KMeans::writeMeans(const std::string &filepath) {
 
   // Copy all data to file_stream, then append a newline.
   for (auto &mean : means_) {
-    std::ostream_iterator<double> itr(file_stream, " ");
+    std::ostream_iterator<float> itr(file_stream, " ");
     std::copy(mean.data_.begin(), mean.data_.end(), itr);
     file_stream << endl;
   }

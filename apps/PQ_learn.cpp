@@ -4,9 +4,12 @@
  *  Created on: 16 Aug 2018
  *      Author: oruqimaru
  */
-#include <DataUtil.h>
+#include "../learn/PQ/point.h"
+#include "../learn/PQ/kmeans.h"
+#include "../include/load/DataUtil.h"
 #include <iostream>
 #include <string>
+#include "../learn/PQ/PQ.h"
 
 using namespace std;
 using namespace arma;
@@ -24,7 +27,10 @@ int main(int argc, char** argv){
 
 	vector<float> points(nt * tDim);
 	ReadOneDimensionalPoints(tInputPath,FVEC,points,nt,tDim);
-
+	//PQquantizer(int numData,int seg, int datadim, int nCent, const vector<float>& originData){
+	PQquantizer myPQ(nt, nSep, dDim,k,points);
+	myPQ.learn();
+	myPQ.save_codeBooks("/Users/oruqimaru/Repositary/PQvsKNN/test/testCBout");
 
 
 }

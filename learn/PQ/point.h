@@ -18,7 +18,7 @@ class Point {
   Point(double x, double y, double z);
 
   // Initialize from a vector.
-  Point(const std::vector<double> &vector);
+  Point(const std::vector<float> &vector);
 
   ~Point() { }
 
@@ -33,7 +33,7 @@ class Point {
   bool update(int k);
 
   // Members: the data, the number of dimensions, and the cluster ID.
-  std::vector<double> data_;
+  std::vector<float> data_;
   int dimensions_;
   int cluster_;
 

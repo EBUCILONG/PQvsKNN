@@ -311,21 +311,7 @@ void SaveOneDimensionalPoints(
  * @param subCode  the reference of the mat
  * @param points   the reference of the input vector
  */
-void loadMatFromVector(
-	int dataDim,
-	int dataNum,
-	int matrixRowDim,
-	mat& subCode,
-	vector<float>& points,
-	int bias
-	){
-	for(int i = 0; i < dataNum; i++){
-			for(int j = 0; j < matrixRowDim; j++){
-				subCode(i,j) = points(i * dataDim + bias + j);
-			}
-		}
-	vector<mat> a;
-}
+
 
 
 #endif /* LOAD_DATAUTIL_H_ */
