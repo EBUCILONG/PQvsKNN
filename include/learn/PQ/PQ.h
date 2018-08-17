@@ -9,7 +9,7 @@
 #define LEARN_PQ_PQ_H_
 
 #include "learn/PQ/point.h"
-#include "learn/PQ/kmeans.h"
+#include "kmeans.h"
 #include "load/DataUtil.h"
 #include <vector>
 #include <string>
