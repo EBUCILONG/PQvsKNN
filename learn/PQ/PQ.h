@@ -86,8 +86,9 @@ public:
 
 			for (auto &mean : codeBooks[i]) {
 					file_stream << subDim << " ";
-				    std::ostream_iterator<float> itr(file_stream, " ");
-				    std::copy(mean.data_.begin(), mean.data_.end(), itr);
+				    for(int j = 0; j < subDim; j++){
+				    	file_stream << mean.data_[j] << " ";
+				    }
 				    file_stream << endl;
 			}
 		}
