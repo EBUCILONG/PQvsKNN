@@ -9,7 +9,7 @@
 #include "load/DataUtil.h"
 #include <iostream>
 #include <string>
-#include "../learn/PQ/PQ.h"
+#include "learn/PQ/PQ.h"
 
 using namespace std;
 //using namespace arma;
@@ -24,13 +24,14 @@ int main(int argc, char** argv){
 	int k = stoi(argv[6]);
 	int nSep = stoi(argv[7]);
 	int subDim = stoi(argv[8]);
+	string outputPath(argv[9]);
 
 	vector<float> points(nt * tDim);
 	ReadOneDimensionalPoints(tInputPath,FVEC,points,nt,tDim);
 	//PQquantizer(int numData,int seg, int datadim, int nCent, const vector<float>& originData){
 	PQquantizer myPQ(nt, nSep, dDim,k,points);
 	myPQ.learn();
-	myPQ.save_codeBooks("/Users/oruqimaru/Repositary/PQvsKNN/test/testCBout");
+	myPQ.save_codeBooks(outputPath);
 
 
 }
