@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <cmath>
-#include "learn/PQ/point.h"
+#include "point.h"
 
 Point::Point(int num_dimensions, bool init_zeros)
   : cluster_(-1),

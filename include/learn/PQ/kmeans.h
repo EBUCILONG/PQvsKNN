@@ -17,7 +17,7 @@
 #include <string>
 #include <vector>
 
-#include "learn/PQ/point.h"
+#include "point.h"
 
 class KMeans {
  public:
