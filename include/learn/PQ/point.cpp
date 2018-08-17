@@ -2,7 +2,7 @@
 
 #include <cassert>
 #include <cmath>
-#include "point.h"
+#include "learn/PQ/point.h"
 
 Point::Point(int num_dimensions, bool init_zeros)
   : cluster_(-1),
@@ -14,13 +14,13 @@ Point::Point(int num_dimensions, bool init_zeros)
   }
 }
 
-Point::Point(float x, float y, float z)
+/*Point::Point(float x, float y, float z)
   : Point(3, false) {
   data_.clear();
   data_.push_back(x);
   data_.push_back(y);
   data_.push_back(z);
-}
+}*/
 
 Point::Point(const std::vector<float> &vector)
   : cluster_(-1) {

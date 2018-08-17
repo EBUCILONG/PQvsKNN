@@ -8,8 +8,8 @@
 #ifndef LEARN_PQ_PQ_H_
 #define LEARN_PQ_PQ_H_
 
-#include "point.h"
-#include "kmeans.h"
+#include "learn/PQ/point.h"
+#include "learn/PQ/kmeans.h"
 #include "load/DataUtil.h"
 #include <vector>
 #include <string>

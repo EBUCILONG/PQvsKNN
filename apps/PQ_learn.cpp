@@ -4,13 +4,14 @@
  *  Created on: 16 Aug 2018
  *      Author: oruqimaru
  */
+#include "learn/PQ/PQ.h"
 #include "learn/PQ/point.h"
 #include "learn/PQ/kmeans.h"
 #include "load/DataUtil.h"
 #include <iostream>
 #include <string>
 //#include "learn/PQ/PQ.h"
-#include "learn/PQ/PQ.h"
+
 using namespace std;
 //using namespace arma;
 

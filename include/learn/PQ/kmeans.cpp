@@ -1,7 +1,7 @@
 // Author: Felix Duvallet
 
 //#include "learn/PQ/kmeans.h"
-#include "kmeans.h"
+#include "learn/PQ/kmeans.h"
 
 #include <algorithm>
 #include <cassert>
