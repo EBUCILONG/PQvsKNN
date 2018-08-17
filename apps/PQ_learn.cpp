@@ -12,7 +12,7 @@
 #include "../learn/PQ/PQ.h"
 
 using namespace std;
-using namespace arma;
+//using namespace arma;
 
 int main(int argc, char** argv){
 	int nt = stoi(argv[0]);
