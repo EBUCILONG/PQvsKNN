@@ -8,7 +8,6 @@
 #ifndef LOAD_DATAUTIL_H_
 #define LOAD_DATAUTIL_H_
 
-#include<armadillo>
 #include <string>
 #include <fstream>
 #include <ios>
@@ -23,7 +22,6 @@ using std::ios;
 using std::cout;
 using std::endl;
 using std::pair;
-using namespace arma;
 
 // PointType and DcitionaryType must be the same and be float!
 typedef float FloatType;
