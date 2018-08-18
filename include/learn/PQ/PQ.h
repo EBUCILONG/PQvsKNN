@@ -94,6 +94,17 @@ public:
 		}
 	}
 
+	void save_buckets(string outputPath){
+		for(int i = 0; i < nData; i++){
+			stringstream ss;
+			ss << outputPath << "/" << "bucket";
+			for(int j = 0; j < nCodeBook - 1; j++)
+				ss << bucketBelong[i][j] << "-";
+			ss << bucketBelong[i][nCodeBook - 1];
+			ofstream file_stream(ss.str(),ios::app);
+			file_stream << i << endl;
+		}
+	}
 public:
 	vector<vector<Point> > modifieData;
 	vector<vector<Point> > codeBooks;

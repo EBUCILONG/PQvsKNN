@@ -25,15 +25,16 @@ int main(int argc, char** argv){
 	int k = stoi(argv[7]);
 	int nSep = stoi(argv[8]);
 	int subDim = stoi(argv[9]);
-	string outputPath(argv[10]);
+	string codeBookOutputPath(argv[10]);
+	string bucketOutputPath(argv[11]);
 
 	vector<float> points(nt * tDim);
 	ReadOneDimensionalPoints(tInputPath,FVEC,points,nt,tDim);
 	//PQquantizer(int numData,int seg, int datadim, int nCent, const vector<float>& originData){
 	PQquantizer myPQ(nt, nSep, dDim,k,points);
 	myPQ.learn();
-	myPQ.save_codeBooks(outputPath);
-
+	myPQ.save_codeBooks(codeBookOutputPath);
+	myPQ.save_buckets(bucketOutputPath);
 
 }
 
