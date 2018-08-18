@@ -11,6 +11,8 @@
 #include "learn/PQ/point.h"
 #include "learn/PQ/kmeans.h"
 #include "load/DataUtil.h"
+#include <unordered_map>
+#include <iostream>
 #include <vector>
 #include <string>
 #include <sstream>
@@ -94,15 +96,31 @@ public:
 		}
 	}
 
-	void save_buckets(string outputPath){
+	void save_buckets_same_vectorfile(string outputPath){
+		unordered_map<string, int> buckets;
 		for(int i = 0; i < nData; i++){
 			stringstream ss;
+			stringstream bucketId;
 			ss << outputPath << "/" << "bucket";
 			for(int j = 0; j < nCodeBook - 1; j++)
-				ss << bucketBelong[i][j] << "-";
-			ss << bucketBelong[i][nCodeBook - 1];
-			ofstream file_stream(ss.str(),ios::app);
+				bucketId << bucketBelong[i][j] << "-";
+			bucketId << bucketBelong[i][nCodeBook - 1];
+			ss << bucketId.str();
+			if(buckets.find(bucketId.str()) != buckets.end())
+				buckets[bucketId.str()]++;
+			else buckets.insert(std::make_pair(bucketId.str(),1));
+			ofstream file_stream(bucketId.str(),ios::app);
 			file_stream << i << endl;
+		}
+		stringstream countOut;
+		countOut << outputPath << "/count_result";
+		ofstream file_stream(countOut.str());
+		vector<pair<string, int>> ordered_by_value(buckets.begin(), buckets.end());
+		std::sort(ordered_by_value.begin(), ordered_by_value.end(),[](const pair<string, int>& lhs, const pair<string, int>& rhs){
+			return lhs.second < rhs.second;
+		});
+		for(auto & aim : ordered_by_value){
+			file_stream << aim.second << endl;
 		}
 	}
 public:
