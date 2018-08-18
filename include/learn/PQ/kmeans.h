@@ -160,8 +160,8 @@ bool KMeans::assign() {
     bool ret = point.update(new_cluster);
     changed = changed || ret;
 
-    cout << "Assigned point " << point << " to cluster: "
-    << new_cluster << endl;
+    //cout << "Assigned point " << point << " to cluster: "
+    //<< new_cluster << endl;
   }
   return changed;
 }

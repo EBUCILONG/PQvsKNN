@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <iostream>
+#include <cmath>
 
 class Point {
  public:
