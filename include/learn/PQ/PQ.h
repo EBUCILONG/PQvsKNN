@@ -29,24 +29,29 @@ typedef vector<float> Point;
 class PQquantizer{
 public:
 	PQquantizer(int numData,int seg, int datadim, int nCent, const vector<float>& originData){
-		nData = numData;
+		cout << "coming in" << endl;
+        nData = numData;
 		nCodeBook = seg;
 		dataDim = datadim;
 		subDim = dataDim / nCodeBook;
 		nCentro = nCent;
 		codeBooks.resize(0);
 		bucketBelong.resize(numData);
-		modifiedData = new char* [nCodeBook];
-		for(int i = 0; i < datadim * numData; i++){
-			modifiedData[i] = new float [subDim];
-			for(int j = 0 ; j < subDim; j++){
-				modifiedData[i][j] = originData[i*subDim + j];
-			}
+		modifiedData = new float* [nCodeBook];
+		for(int i = 0; i < nCodeBook; i++){
+			modifiedData[i] = new float [subDim*nData];
+			for(int j = 0 ; j < nData; j++){
+                for(int k = 0; k < subDim; k++){
+                    modifiedData[i][j*subDim+k] = originData[j*datadim + i*subDim + k];
+                }
+            }
+            cout << i << " "; 
 		}
+        cout << "go away" << endl;
 	}
 
 	~PQquantizer(){
-		for(int i = 0; i < nCentro; i++)
+		for(int i = 0; i < nCodeBook; i++)
 			delete [] modifiedData[i];
 		delete [] modifiedData;
 	}
@@ -58,7 +63,7 @@ public:
 			int* label = new int[nData];
 			newK.Cluster(modifiedData[i], nData, label);
 			for(int j = 0; j < nData; j++)
-				bucketBelong[i].push_back(label[i]);
+				bucketBelong[j].push_back(label[j]);
 			vector<vector<float>> aimingCBB;
 			aimingCBB.resize(nCentro);
 			for(int j = 0; j < nCentro; j++){
@@ -68,6 +73,7 @@ public:
 			}
 			codeBooks.push_back(aimingCBB);
 			delete label;
+            cout << i << " book done" << endl;
 		}
 	}
 
@@ -104,11 +110,13 @@ public:
 				file_stream << endl;
 			}
 		}
+        cout << "code book save finished" << endl;
 	}
 
 	void save_buckets_same_vectorfile(string outputPath){
-		unordered_map<string, int> buckets;
+        unordered_map<string, int> buckets;
 		for(int i = 0; i < nData; i++){
+            cout << bucketBelong[i].size() << " ";
 			stringstream ss;
 			stringstream bucketId;
 			ss << outputPath << "/" << "buckets";
@@ -119,9 +127,13 @@ public:
 			if(buckets.find(bucketId.str()) != buckets.end())
 				buckets[bucketId.str()]++;
 			else buckets.insert(std::make_pair(bucketId.str(),1));
-			ofstream file_stream(bucketId.str(),ios::app);
+            cout << bucketId.str() << " "<<ss.str();
+			ofstream file_stream(ss.str(),ios::app);
+            if(!file_stream) cout << "cannot open dir" << endl;
 			file_stream << i << endl;
+            cout << " done " << endl;
 		}
+        cout << "finish recursion" << endl;
 		stringstream countOut;
 		countOut << outputPath << "/count_result";
 		ofstream file_stream(countOut.str());
@@ -147,4 +159,4 @@ public:
 
 
 
-#endif /* LEARN_PQ_PQ_H_ */
+#endif /* LEARN_PQ_PxQ_H_ */

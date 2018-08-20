@@ -97,11 +97,13 @@ void ReadOneDimensionalPoints(
 			point_stream.seekg(0, point_stream.end);
 			count = point_stream.tellg() / ((dim + 1) * 4);
 			cout << "Number of the vector set:" << count << endl;
+            
 			if (dim != dimension || count != points_count)
 			{
 				cout << "unmatched dimension!\n";
 				throw std::logic_error("unmatched dimension!");
 			}
+            cout << "* 1 *" << endl;
 			point_stream.seekg(0, point_stream.beg);
 			for (int count_id = 0; count_id < count; ++count_id)
 			{
@@ -109,6 +111,7 @@ void ReadOneDimensionalPoints(
 				point_stream.read(reinterpret_cast<char*>(&vector_dimension), sizeof(vector_dimension));
 				point_stream.read(reinterpret_cast<char*>(&points[count_id*dim]), sizeof(float)*dim);
 			}
+            cout << "* 2 *" << endl; 
 			break;
 		case BVEC:
 			point_stream.read((char *)&dim, sizeof(int));
@@ -161,7 +164,9 @@ void ReadOneDimensionalPoints(
 			point_stream.read(reinterpret_cast<char*>(&(points[0])), sizeof(T)*dim*count);
 			break;
 	}
+    cout << "* 3.1 *" << endl;
 	point_stream.close();
+    cout << "* 3.2 *" << endl;
 }
 
 template<typename T>
