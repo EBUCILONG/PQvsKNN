@@ -8,6 +8,8 @@ History:
 ***************************************************************************/
 
 #pragma once
+#include <algorithm>
+#include <string.h>
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>

@@ -59,11 +59,14 @@ public:
 			newK.Cluster(modifiedData[i], nData, label);
 			for(int j = 0; j < nData; j++)
 				bucketBelong[i].push_back(label[i]);
-			vector<Point> new_codeBook(nCentro, dataDim);
-			for(int j = 0; j < nCentro; j++)
+			vector<vector<float>> aimingCBB;
+			aimingCBB.resize(nCentro);
+			for(int j = 0; j < nCentro; j++){
+				aimingCBB[j].resize(dataDim);
 				for(int k = 0; k < dataDim; k++)
-					new_codeBook[j][k] = newK.m_means[j][k];
-			codeBooks.push_back(new_codeBook);
+					aimingCBB[j][k] = newK.m_means[j][k];
+			}
+			codeBooks.push_back(aimingCBB);
 			delete label;
 		}
 	}
