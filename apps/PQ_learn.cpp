@@ -34,7 +34,7 @@ int main(int argc, char** argv){
 	PQquantizer myPQ(nt, nSep, dDim,k,points);
 	myPQ.learn();
 	myPQ.save_codeBooks(codeBookOutputPath);
-	myPQ.save_buckets(bucketOutputPath);
+	myPQ.save_buckets_same_vectorfile(bucketOutputPath);
 
 }
 

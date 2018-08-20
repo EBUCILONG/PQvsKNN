@@ -8,7 +8,6 @@
 #ifndef LEARN_PQ_PQ_H_
 #define LEARN_PQ_PQ_H_
 
-#include "learn/PQ/point.h"
 #include "learn/PQ/kmeans.h"
 #include "load/DataUtil.h"
 #include <unordered_map>
@@ -21,6 +20,9 @@
 using namespace std;
 using std::vector;
 using std::string;
+
+
+typedef vector<float> Point;
 /*
  * this function is used to learn the code book for PQ
  */
@@ -32,31 +34,37 @@ public:
 		dataDim = datadim;
 		subDim = dataDim / nCodeBook;
 		nCentro = nCent;
-		modifieData.resize(nCodeBook);
 		codeBooks.resize(0);
 		bucketBelong.resize(numData);
-		for(int i = 0; i < nCodeBook; i++){
-			 for(int j = 0; j < nData; j++){
-				 vector<float> newPoint;
-				 newPoint.reserve(subDim);
-				 int bias = j*dataDim + i*subDim;
-				 for(int k = 0; k < subDim; k++){
-					 newPoint.push_back(originData[bias + k]);
-				 }
-				 modifieData[i].push_back(Point(newPoint));
-			 }
+		modifiedData = new char* [nCodeBook];
+		for(int i = 0; i < datadim * numData; i++){
+			modifiedData[i] = new float [subDim];
+			for(int j = 0 ; j < subDim; j++){
+				modifiedData[i][j] = originData[i*subDim + j];
+			}
 		}
+	}
+
+	~PQquantizer(){
+		for(int i = 0; i < nCentro; i++)
+			delete [] modifiedData[i];
+		delete [] modifiedData;
 	}
 
 	void learn(){
 		for(int i = 0; i < nCodeBook; i++){
-			KMeans newK(nCentro);
-			newK.init(modifieData[i]);
-			newK.run();
-			codeBooks.push_back(newK.means_);
-			for(int i = 0; i < nData; i++){
-					bucketBelong[i].push_back(newK.points_[i].cluster_);
-			}
+			KMeans newK(subDim,nCentro);
+			newK.SetInitMode(KMeans::InitUniform);
+			int* label = new int[nData];
+			newK.Cluster(modifiedData[i], nData, label);
+			for(int j = 0; j < nData; j++)
+				bucketBelong[i].push_back(label[i]);
+			vector<Point> new_codeBook(nCentro, dataDim);
+			for(int j = 0; j < nCentro; j++)
+				for(int k = 0; k < dataDim; k++)
+					new_codeBook[j][k] = newK.m_means[j][k];
+			codeBooks.push_back(new_codeBook);
+			delete label;
 		}
 	}
 
@@ -86,12 +94,11 @@ public:
 				    return;
 			}
 
-			for (auto &mean : codeBooks[i]) {
-					file_stream << subDim << " ";
-				    for(int j = 0; j < subDim; j++){
-				    	file_stream << mean.data_[j] << " ";
-				    }
-				    file_stream << endl;
+			for(int j = 0; j < nCentro; j++){
+				for(int k = 0; k < subDim; k++){
+					file_stream << codeBooks[i][j][k] << " ";
+				}
+				file_stream << endl;
 			}
 		}
 	}
@@ -101,7 +108,7 @@ public:
 		for(int i = 0; i < nData; i++){
 			stringstream ss;
 			stringstream bucketId;
-			ss << outputPath << "/" << "bucket";
+			ss << outputPath << "/" << "buckets";
 			for(int j = 0; j < nCodeBook - 1; j++)
 				bucketId << bucketBelong[i][j] << "-";
 			bucketId << bucketBelong[i][nCodeBook - 1];
@@ -124,9 +131,9 @@ public:
 		}
 	}
 public:
-	vector<vector<Point> > modifieData;
-	vector<vector<Point> > codeBooks;
-	vector<vector<int> > bucketBelong;
+	float** modifiedData;
+	vector<vector<Point>> codeBooks;
+	vector<vector<int>> bucketBelong;
 	int nData;							//number of origin data
 	int nCodeBook;                //how much codeBooks are reuquried
 	int subDim;							//what's the dim of vectors in a codeBook
