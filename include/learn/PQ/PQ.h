@@ -66,7 +66,7 @@ public:
 			vl_kmeans_init_centers_with_rand_data(newK, modifiedData[i], subDim, nData, nCentro);
 			vl_kmeans_set_max_num_iterations (newK, 100) ;
 			vl_kmeans_refine_centers (newK, modifiedData, nData) ;
-			float* centers = vl_kmeans_get_centers(newK);
+			float* centers = (float*)vl_kmeans_get_centers(newK);
 			vector<vector<float>> aimingCBB;
 			aimingCBB.resize(nCentro);
 			for(int j = 0; j < nCentro; j++){
@@ -75,8 +75,8 @@ public:
 					aimingCBB[j][k] = centers[j*subDim + k];
 			}
 			codeBooks.push_back(aimingCBB);
-			vl_uint32 * label = vl_malloc(sizeof(vl_uint) * nData) ;
-			float * distances = vl_malloc(sizeof(float) * nData) ;
+			vl_uint32 * label = (vl_uint32 *)vl_malloc(sizeof(vl_uint) * nData) ;
+			float * distances = (float *)vl_malloc(sizeof(float) * nData) ;
 			vl_kmeans_quantize(newK, label, distances, modifiedData[i], nData);
 			for(int j = 0; j < nData; j++)
 				bucketBelong[j].push_back((int)label[j]);
