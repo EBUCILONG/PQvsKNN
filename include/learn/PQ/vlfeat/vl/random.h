@@ -15,7 +15,7 @@ the terms of the BSD license (see the COPYING file).
 #ifndef VL_RANDOM_H
 #define VL_RANDOM_H
 
-#include "host.h"
+#include "learn/PQ/vlfeat/vl/host.h"
 
 /** @brief Random numbber generator state */
 typedef struct _VlRand {

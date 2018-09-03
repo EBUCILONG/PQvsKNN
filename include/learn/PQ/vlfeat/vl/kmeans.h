@@ -16,11 +16,11 @@ the terms of the BSD license (see the COPYING file).
 #ifndef VL_KMEANS_H
 #define VL_KMEANS_H
 
-#include "generic.h"
-#include "random.h"
-#include "mathop.h"
-#include "kdtree.h"
 
+#include "learn/PQ/vlfeat/vl/generic.h"
+#include "learn/PQ/vlfeat/vl/random.h"
+#include "learn/PQ/vlfeat/vl/mathop.h"
+#include "learn/PQ/vlfeat/vl/kdtree.h"
 /* ---------------------------------------------------------------- */
 
 /** @brief K-means algorithms */

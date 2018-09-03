@@ -14,7 +14,7 @@ the terms of the BSD license (see the COPYING file).
 #ifndef VL_MATHOP_H
 #define VL_MATHOP_H
 
-#include "generic.h"
+#include "learn/PQ/vlfeat/vl/generic.h"
 #include <math.h>
 #include <float.h>
 

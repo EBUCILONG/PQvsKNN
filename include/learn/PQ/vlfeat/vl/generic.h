@@ -15,8 +15,8 @@ the terms of the BSD license (see the COPYING file).
 #ifndef VL_GENERIC_H
 #define VL_GENERIC_H
 
-#include "host.h"
-#include "random.h"
+#include "learn/PQ/vlfeat/vl/host.h"
+#include "learn/PQ/vlfeat/vl/random.h"
 
 #include <stdlib.h>
 #include <stddef.h>
