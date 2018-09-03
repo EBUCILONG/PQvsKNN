@@ -8,7 +8,9 @@
 #ifndef LEARN_PQ_PQ_H_
 #define LEARN_PQ_PQ_H_
 
-#include "learn/PQ/kmeans.h"
+extern "C" {
+#include "learn/PQ/vlfeat/vl/kmeans.h"
+}
 #include "load/DataUtil.h"
 #include <unordered_map>
 #include <iostream>
@@ -37,6 +39,7 @@ public:
 		nCentro = nCent;
 		codeBooks.resize(0);
 		bucketBelong.resize(numData);
+		distTable.resize(numData);
 		modifiedData = new float* [nCodeBook];
 		for(int i = 0; i < nCodeBook; i++){
 			modifiedData[i] = new float [subDim*nData];
@@ -56,24 +59,29 @@ public:
 		delete [] modifiedData;
 	}
 
-	void learn(){
+	void learn(int maxIter = 100){
 		for(int i = 0; i < nCodeBook; i++){
-			KMeans newK(subDim,nCentro);
-			newK.SetInitMode(KMeans::InitUniform);
-			int* label = new int[nData];
-			newK.Cluster(modifiedData[i], nData, label);
-			for(int j = 0; j < nData; j++)
-				bucketBelong[j].push_back(label[j]);
+			VlKMeans * newK = vl_kmeans_new(VL_TYPE_FLOAT, VlDistanceL2);
+			vl_kmeans_set_algorithm(newK, VlKMeansLloyd);
+			vl_kmeans_init_centers_with_rand_data(newK, modifiedData[i], subDim, nData, nCentro);
+			vl_kmeans_set_max_num_iterations (newK, 100) ;
+			vl_kmeans_refine_centers (newK, modifiedData, nData) ;
+			float* centers = vl_kmeans_get_centers(newK);
 			vector<vector<float>> aimingCBB;
 			aimingCBB.resize(nCentro);
 			for(int j = 0; j < nCentro; j++){
-				aimingCBB[j].resize(dataDim);
-				for(int k = 0; k < dataDim; k++)
-					aimingCBB[j][k] = newK.m_means[j][k];
+				aimingCBB[j].resize(subDim);
+				for(int k = 0; k < subDim; k++)
+					aimingCBB[j][k] = centers[j*subDim + k];
 			}
 			codeBooks.push_back(aimingCBB);
-			delete label;
-            cout << i << " book done" << endl;
+			vl_uint32 * label = vl_malloc(sizeof(vl_uint) * nData) ;
+			float * distances = vl_malloc(sizeof(float) * nData) ;
+			vl_kmeans_quantize(newK, label, distances, modifiedData[i], nData);
+			for(int j = 0; j < nData; j++)
+				bucketBelong[j].push_back((int)label[j]);
+			for(int j = 0; j < nData; j++)
+				distTable[j].push_back(distances[j]);
 		}
 	}
 
@@ -147,6 +155,7 @@ public:
 	}
 public:
 	float** modifiedData;
+	vector<vector<float>> distTable;
 	vector<vector<Point>> codeBooks;
 	vector<vector<int>> bucketBelong;
 	int nData;							//number of origin data
